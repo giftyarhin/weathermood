@@ -1209,7 +1209,12 @@ function getCityData(cityName) {
         }
     };
 
-    return cityDatabase[cityName] || {
+    // Make lookup case-insensitive
+    const matchedCity = Object.keys(cityDatabase).find(
+        key => key.toLowerCase() === cityName.toLowerCase()
+    );
+    
+    return (matchedCity ? cityDatabase[matchedCity] : null) || {
         region: currentCity?.state || 'Various',
         elevation: 'Data unavailable',
         population: 'Data unavailable',
@@ -1405,6 +1410,70 @@ function loadDemoData(cityName) {
             pressure: 1013,
             visibility: 10000,
             timezone: 32400
+        },
+        'tamale': {
+            name: 'Tamale',
+            country: 'GH',
+            state: 'Northern Region',
+            lat: 9.4034,
+            lon: -0.8424,
+            temp: 32,
+            feels_like: 36,
+            description: 'clear sky',
+            icon: '01d',
+            humidity: 45,
+            wind_speed: 8,
+            pressure: 1010,
+            visibility: 10000,
+            timezone: 0
+        },
+        'kumasi': {
+            name: 'Kumasi',
+            country: 'GH',
+            state: 'Ashanti Region',
+            lat: 6.6885,
+            lon: -1.6244,
+            temp: 27,
+            feels_like: 30,
+            description: 'scattered clouds',
+            icon: '03d',
+            humidity: 70,
+            wind_speed: 6,
+            pressure: 1012,
+            visibility: 10000,
+            timezone: 0
+        },
+        'nairobi': {
+            name: 'Nairobi',
+            country: 'KE',
+            state: 'Nairobi County',
+            lat: -1.2864,
+            lon: 36.8172,
+            temp: 23,
+            feels_like: 23,
+            description: 'partly cloudy',
+            icon: '02d',
+            humidity: 60,
+            wind_speed: 10,
+            pressure: 1015,
+            visibility: 10000,
+            timezone: 10800
+        },
+        'johannesburg': {
+            name: 'Johannesburg',
+            country: 'ZA',
+            state: 'Gauteng',
+            lat: -26.2041,
+            lon: 28.0473,
+            temp: 24,
+            feels_like: 24,
+            description: 'clear sky',
+            icon: '01d',
+            humidity: 55,
+            wind_speed: 12,
+            pressure: 1016,
+            visibility: 10000,
+            timezone: 7200
         }
     };
 
