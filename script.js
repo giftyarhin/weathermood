@@ -24,7 +24,10 @@ const elements = {
     compareInput: document.getElementById('compareInput'),
     addCompareBtn: document.getElementById('addCompareBtn'),
     comparisonGrid: document.getElementById('comparisonGrid'),
-    retryBtn: document.getElementById('retryBtn')
+    retryBtn: document.getElementById('retryBtn'),
+    cityInfoBadge: document.getElementById('cityInfoBadge'),
+    cityInfoPanel: document.getElementById('cityInfoPanel'),
+    closeInfoBtn: document.getElementById('closeInfoBtn')
 };
 
 // ============================================
@@ -150,6 +153,8 @@ function initializeApp() {
         elements.error.classList.add('hidden');
         elements.welcomeScreen.classList.remove('hidden');
     });
+    elements.cityInfoBadge.addEventListener('click', toggleCityInfo);
+    elements.closeInfoBtn.addEventListener('click', toggleCityInfo);
 
     // Show API activation notice if in demo mode
     if (DEMO_MODE) {
@@ -379,8 +384,14 @@ async function fetchWeatherData(city) {
             throw new Error('City not found. Please check the spelling and try again.');
         }
 
-        const { lat, lon, name, country } = geoData[0];
-        currentCity = { name, country, lat, lon };
+        const { lat, lon, name, country, state } = geoData[0];
+        currentCity = { 
+            name, 
+            country, 
+            state: state || '', 
+            lat, 
+            lon 
+        };
 
         // Fetch all weather data in parallel
         const [currentWeather, forecast, airQuality] = await Promise.all([
@@ -438,9 +449,15 @@ async function fetchWeatherByCoords(lat, lon) {
         }
 
         if (geoReverse && geoReverse.length > 0) {
-            currentCity = { name: geoReverse[0].name, country: geoReverse[0].country, lat, lon };
+            currentCity = { 
+                name: geoReverse[0].name, 
+                country: geoReverse[0].country, 
+                state: geoReverse[0].state || '', 
+                lat, 
+                lon 
+            };
         } else {
-            currentCity = { name: 'Your Location', country: '', lat, lon };
+            currentCity = { name: 'Your Location', country: '', state: '', lat, lon };
         }
 
         weatherData = { currentWeather, forecast, airQuality };
@@ -475,6 +492,9 @@ function displayWeatherData() {
 
     // Display mood & activities (unique feature)
     displayMoodAndActivities(currentWeather);
+
+    // Display city information
+    displayCityInformation(currentWeather);
 
     // Show weather display
     elements.weatherDisplay.classList.remove('hidden');
@@ -754,6 +774,139 @@ function removeCompareCity(index) {
 window.removeCompareCity = removeCompareCity;
 
 // ============================================
+// CITY INFORMATION (UNIQUE FEATURE)
+// ============================================
+function displayCityInformation(data) {
+    const { name, country, state, lat, lon } = currentCity;
+    const countryNames = {
+        'GH': 'Ghana', 'GB': 'United Kingdom', 'US': 'United States', 
+        'JP': 'Japan', 'FR': 'France', 'DE': 'Germany', 'CN': 'China',
+        'IN': 'India', 'BR': 'Brazil', 'AU': 'Australia', 'CA': 'Canada',
+        'IT': 'Italy', 'ES': 'Spain', 'MX': 'Mexico', 'KR': 'South Korea',
+        'NG': 'Nigeria', 'ZA': 'South Africa', 'EG': 'Egypt', 'KE': 'Kenya'
+    };
+
+    // Get timezone offset
+    const timezoneOffset = data.timezone || 0;
+    const timezoneHours = timezoneOffset / 3600;
+    const timezoneString = `UTC${timezoneHours >= 0 ? '+' : ''}${timezoneHours}`;
+
+    // City data
+    const cityData = getCityData(name);
+
+    // Update city info panel
+    document.getElementById('infoCountry').textContent = countryNames[country] || country || '---';
+    document.getElementById('infoRegion').textContent = state || cityData.region || '---';
+    document.getElementById('infoCoordinates').textContent = `${lat.toFixed(4)}°, ${lon.toFixed(4)}°`;
+    document.getElementById('infoTimezone').textContent = timezoneString;
+    document.getElementById('infoElevation').textContent = cityData.elevation || 'N/A';
+    document.getElementById('infoPopulation').textContent = cityData.population || 'N/A';
+    document.getElementById('cityDescription').innerHTML = `<p>${cityData.description}</p>`;
+}
+
+function toggleCityInfo() {
+    const panel = elements.cityInfoPanel;
+    panel.classList.toggle('hidden');
+    panel.classList.toggle('slide-in');
+}
+
+function getCityData(cityName) {
+    const cityDatabase = {
+        'Accra': {
+            region: 'Greater Accra',
+            elevation: '61 m',
+            population: '2.5 million',
+            description: "Accra is the capital and largest city of Ghana. It's a vibrant coastal city known for its beaches, markets, and colonial architecture. The city serves as the economic and administrative hub of Ghana."
+        },
+        'Lagos': {
+            region: 'Lagos State',
+            elevation: '41 m',
+            population: '15 million',
+            description: "Lagos is Nigeria's largest city and economic hub. A vibrant megacity on the Atlantic coast, it's known for its dynamic music scene, markets, beaches, and as a major financial center in Africa."
+        },
+        'London': {
+            region: 'England',
+            elevation: '11 m',
+            population: '9.7 million',
+            description: "London is the capital and largest city of England and the United Kingdom. A global hub for culture, finance, and history, it's home to iconic landmarks like Big Ben, the Tower of London, and Buckingham Palace."
+        },
+        'New York': {
+            region: 'New York State',
+            elevation: '10 m',
+            population: '8.3 million',
+            description: "New York City is the most populous city in the United States. Known as 'The City That Never Sleeps,' it's a global center for finance, culture, media, and entertainment, featuring landmarks like the Statue of Liberty and Times Square."
+        },
+        'Tokyo': {
+            region: 'Kanto',
+            elevation: '40 m',
+            population: '14 million',
+            description: "Tokyo is the capital and most populous city of Japan. A fascinating blend of traditional and modern, it's known for its skyscrapers, temples, shopping districts, and cutting-edge technology."
+        },
+        'Paris': {
+            region: 'Île-de-France',
+            elevation: '35 m',
+            population: '2.2 million',
+            description: "Paris, the capital of France, is renowned as the 'City of Light' and 'City of Love.' Famous for the Eiffel Tower, Louvre Museum, and Notre-Dame Cathedral, it's a global center for art, fashion, and culture."
+        },
+        'Dubai': {
+            region: 'Dubai Emirate',
+            elevation: '16 m',
+            population: '3.5 million',
+            description: "Dubai is the largest city in the United Arab Emirates. Known for ultramodern architecture, luxury shopping, and vibrant nightlife, it features the world's tallest building, Burj Khalifa."
+        },
+        'Sydney': {
+            region: 'New South Wales',
+            elevation: '3 m',
+            population: '5.4 million',
+            description: "Sydney is Australia's largest and most iconic city. Famous for the Sydney Opera House and Harbour Bridge, it's known for beautiful beaches, vibrant culture, and stunning natural harbors."
+        },
+        'Mumbai': {
+            region: 'Maharashtra',
+            elevation: '14 m',
+            population: '21 million',
+            description: "Mumbai (formerly Bombay) is India's largest city and financial capital. A bustling metropolis, it's home to Bollywood, diverse cuisine, colonial architecture, and vibrant street life."
+        },
+        'Berlin': {
+            region: 'Brandenburg',
+            elevation: '34 m',
+            population: '3.7 million',
+            description: "Berlin is the capital of Germany and a major European cultural hub. Known for its art scene, modern architecture, vibrant nightlife, and historical landmarks including the Berlin Wall and Brandenburg Gate."
+        },
+        'Singapore': {
+            region: 'Central Region',
+            elevation: '15 m',
+            population: '5.7 million',
+            description: "Singapore is a sovereign city-state and island country in Southeast Asia. A global financial center, it's known for its modern skyline, Gardens by the Bay, diverse culture, and reputation as one of the world's cleanest cities."
+        },
+        'Cairo': {
+            region: 'Cairo Governorate',
+            elevation: '23 m',
+            population: '21 million',
+            description: "Cairo is the capital of Egypt and the largest city in the Arab world. Home to the nearby Pyramids of Giza and the Sphinx, it's a bustling metropolis blending ancient history with modern urban life."
+        },
+        'Los Angeles': {
+            region: 'California',
+            elevation: '93 m',
+            population: '4 million',
+            description: "Los Angeles is a sprawling Southern California city and the center of the nation's film and television industry. Famous for Hollywood, beautiful beaches, and diverse neighborhoods, it's a global entertainment capital."
+        },
+        'Moscow': {
+            region: 'Central Russia',
+            elevation: '156 m',
+            population: '12.5 million',
+            description: "Moscow is Russia's capital and largest city. Home to the iconic Red Square, Kremlin, and St. Basil's Cathedral, it's a major political, economic, and cultural center with rich history and grand architecture."
+        }
+    };
+
+    return cityDatabase[cityName] || {
+        region: currentCity?.state || 'Various',
+        elevation: 'Data unavailable',
+        population: 'Data unavailable',
+        description: `${cityName} is a unique destination with its own character and charm. Check the current weather conditions above to plan your day!`
+    };
+}
+
+// ============================================
 // BACKGROUND EFFECTS - MOOD-BASED COLORS
 // ============================================
 function updateBackground(data) {
@@ -865,6 +1018,9 @@ function loadDemoData(cityName) {
         'accra': {
             name: 'Accra',
             country: 'GH',
+            state: 'Greater Accra',
+            lat: 5.6037,
+            lon: -0.1870,
             temp: 28,
             feels_like: 31,
             description: 'partly cloudy',
@@ -872,11 +1028,31 @@ function loadDemoData(cityName) {
             humidity: 75,
             wind_speed: 12,
             pressure: 1012,
-            visibility: 10000
+            visibility: 10000,
+            timezone: 0
+        },
+        'lagos': {
+            name: 'Lagos',
+            country: 'NG',
+            state: 'Lagos State',
+            lat: 6.5244,
+            lon: 3.3792,
+            temp: 29,
+            feels_like: 33,
+            description: 'scattered clouds',
+            icon: '03d',
+            humidity: 78,
+            wind_speed: 14,
+            pressure: 1011,
+            visibility: 10000,
+            timezone: 3600
         },
         'london': {
             name: 'London',
             country: 'GB',
+            state: 'England',
+            lat: 51.5074,
+            lon: -0.1278,
             temp: 12,
             feels_like: 10,
             description: 'light rain',
@@ -884,11 +1060,15 @@ function loadDemoData(cityName) {
             humidity: 82,
             wind_speed: 18,
             pressure: 1015,
-            visibility: 8000
+            visibility: 8000,
+            timezone: 0
         },
         'new york': {
             name: 'New York',
             country: 'US',
+            state: 'New York',
+            lat: 40.7128,
+            lon: -74.0060,
             temp: 15,
             feels_like: 13,
             description: 'clear sky',
@@ -896,11 +1076,15 @@ function loadDemoData(cityName) {
             humidity: 65,
             wind_speed: 15,
             pressure: 1018,
-            visibility: 10000
+            visibility: 10000,
+            timezone: -18000
         },
         'tokyo': {
             name: 'Tokyo',
             country: 'JP',
+            state: 'Kanto',
+            lat: 35.6762,
+            lon: 139.6503,
             temp: 20,
             feels_like: 19,
             description: 'few clouds',
@@ -908,7 +1092,8 @@ function loadDemoData(cityName) {
             humidity: 70,
             wind_speed: 10,
             pressure: 1013,
-            visibility: 10000
+            visibility: 10000,
+            timezone: 32400
         }
     };
 
@@ -916,6 +1101,9 @@ function loadDemoData(cityName) {
     const demo = demoData[cityKey] || {
         name: cityName,
         country: 'XX',
+        state: '',
+        lat: 0,
+        lon: 0,
         temp: 22,
         feels_like: 24,
         description: 'clear sky',
@@ -923,15 +1111,23 @@ function loadDemoData(cityName) {
         humidity: 70,
         wind_speed: 10,
         pressure: 1013,
-        visibility: 10000
+        visibility: 10000,
+        timezone: 0
     };
 
-    currentCity = { name: demo.name, country: demo.country, lat: 0, lon: 0 };
+    currentCity = { 
+        name: demo.name, 
+        country: demo.country, 
+        state: demo.state,
+        lat: demo.lat, 
+        lon: demo.lon 
+    };
 
     // Create demo weather data
     const currentWeather = {
         name: demo.name,
         dt: Math.floor(Date.now() / 1000),
+        timezone: demo.timezone,
         main: {
             temp: demo.temp,
             feels_like: demo.feels_like,

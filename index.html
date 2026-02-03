@@ -55,6 +55,67 @@
                 <div class="location-info">
                     <h2 id="cityName">---</h2>
                     <p id="dateTime">---</p>
+                    <div class="city-info-badge" id="cityInfoBadge">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="cityInfoText">Click for city details</span>
+                    </div>
+                </div>
+                
+                <!-- City Information Panel -->
+                <div class="city-info-panel hidden" id="cityInfoPanel">
+                    <div class="city-info-header">
+                        <h4><i class="fas fa-city"></i> City Information</h4>
+                        <button class="close-info-btn" id="closeInfoBtn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="city-info-grid">
+                        <div class="info-item">
+                            <i class="fas fa-flag"></i>
+                            <div>
+                                <span class="info-label">Country</span>
+                                <span class="info-value" id="infoCountry">---</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-globe"></i>
+                            <div>
+                                <span class="info-label">Region</span>
+                                <span class="info-value" id="infoRegion">---</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-pin"></i>
+                            <div>
+                                <span class="info-label">Coordinates</span>
+                                <span class="info-value" id="infoCoordinates">---</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <span class="info-label">Timezone</span>
+                                <span class="info-value" id="infoTimezone">---</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-mountain"></i>
+                            <div>
+                                <span class="info-label">Elevation</span>
+                                <span class="info-value" id="infoElevation">---</span>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <span class="info-label">Population</span>
+                                <span class="info-value" id="infoPopulation">---</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="city-description" id="cityDescription">
+                        <p>---</p>
+                    </div>
                 </div>
                 
                 <div class="weather-main">
