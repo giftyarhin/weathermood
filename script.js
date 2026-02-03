@@ -812,35 +812,212 @@ function toggleCityInfo() {
 
 function getCityData(cityName) {
     const cityDatabase = {
+        // Ghana
         'Accra': {
             region: 'Greater Accra',
             elevation: '61 m',
             population: '2.5 million',
             description: "Accra is the capital and largest city of Ghana. It's a vibrant coastal city known for its beaches, markets, and colonial architecture. The city serves as the economic and administrative hub of Ghana."
         },
+        'Kumasi': {
+            region: 'Ashanti Region',
+            elevation: '250 m',
+            population: '3.3 million',
+            description: "Kumasi is the capital of the Ashanti Region and Ghana's second-largest city. Known as the 'Garden City,' it's the cultural heartland of the Ashanti people, famous for the Manhyia Palace and vibrant markets."
+        },
+        'Tamale': {
+            region: 'Northern Region',
+            elevation: '183 m',
+            population: '537,000',
+            description: "Tamale is the capital of the Northern Region of Ghana. A major commercial hub in northern Ghana, it's known for its markets, cultural festivals, and as a gateway to national parks and traditional villages."
+        },
+        'Takoradi': {
+            region: 'Western Region',
+            elevation: '7 m',
+            population: '445,000',
+            description: "Takoradi is a coastal city and the capital of Western Region. A major seaport and industrial hub, it's known for its beaches, oil and gas industry, and vibrant fishing communities."
+        },
+        'Cape Coast': {
+            region: 'Central Region',
+            elevation: '13 m',
+            population: '169,000',
+            description: "Cape Coast is the capital of Central Region with rich colonial history. Famous for Cape Coast Castle (UNESCO site), it played a significant role in the trans-Atlantic slave trade and is a major tourist destination."
+        },
+        'Tema': {
+            region: 'Greater Accra',
+            elevation: '10 m',
+            population: '402,000',
+            description: "Tema is a planned city and Ghana's main seaport. Built in the 1950s, it's an industrial hub known for its modern harbor, fishing industry, and as the gateway for Ghana's imports and exports."
+        },
+        
+        // Nigeria
         'Lagos': {
             region: 'Lagos State',
             elevation: '41 m',
             population: '15 million',
             description: "Lagos is Nigeria's largest city and economic hub. A vibrant megacity on the Atlantic coast, it's known for its dynamic music scene, markets, beaches, and as a major financial center in Africa."
         },
+        'Abuja': {
+            region: 'Federal Capital Territory',
+            elevation: '840 m',
+            population: '3.6 million',
+            description: "Abuja is the capital of Nigeria, planned and built in the 1980s. Known for its modern architecture, including the iconic Aso Rock, it serves as the political and administrative center of Nigeria."
+        },
+        'Kano': {
+            region: 'Kano State',
+            elevation: '484 m',
+            population: '4.1 million',
+            description: "Kano is one of Nigeria's oldest cities and commercial centers in the north. Famous for its ancient city walls, vibrant markets, traditional textile industry (adire), and rich Islamic heritage."
+        },
+        'Ibadan': {
+            region: 'Oyo State',
+            elevation: '200 m',
+            population: '3.6 million',
+            description: "Ibadan is one of Nigeria's largest cities and the capital of Oyo State. Known as a major educational center, home to the University of Ibadan, cocoa trade, and rich Yoruba culture."
+        },
+        'Port Harcourt': {
+            region: 'Rivers State',
+            elevation: '12 m',
+            population: '3.2 million',
+            description: "Port Harcourt is the oil and gas capital of Nigeria. A major port city in the Niger Delta, it's the economic hub of southern Nigeria, known for its petroleum industry and waterfront location."
+        },
+        
+        // Kenya
+        'Nairobi': {
+            region: 'Nairobi County',
+            elevation: '1,795 m',
+            population: '4.4 million',
+            description: "Nairobi is the capital of Kenya and a major hub in East Africa. Known for its wildlife (Nairobi National Park), vibrant culture, and as a center for business and innovation in the region."
+        },
+        'Mombasa': {
+            region: 'Mombasa County',
+            elevation: '17 m',
+            population: '1.2 million',
+            description: "Mombasa is Kenya's second-largest city and main seaport. A historic coastal city with beautiful beaches, it's known for Fort Jesus (UNESCO site), Swahili culture, and as a major tourist destination."
+        },
+        'Kisumu': {
+            region: 'Kisumu County',
+            elevation: '1,131 m',
+            population: '610,000',
+            description: "Kisumu is Kenya's third-largest city on Lake Victoria's shores. A major port and commercial center in western Kenya, known for fishing, sugar industry, and as a gateway to regional tourism."
+        },
+        
+        // South Africa
+        'Cape Town': {
+            region: 'Western Cape',
+            elevation: '25 m',
+            population: '4.6 million',
+            description: "Cape Town is a coastal city in South Africa. Famous for Table Mountain, beautiful beaches, and vibrant waterfront, it's known for its natural beauty, wine regions, and diverse culture."
+        },
+        'Johannesburg': {
+            region: 'Gauteng',
+            elevation: '1,753 m',
+            population: '5.7 million',
+            description: "Johannesburg is South Africa's largest city and economic hub. Known as the 'City of Gold' due to its mining history, it's a major financial center with vibrant culture and rich history."
+        },
+        'Durban': {
+            region: 'KwaZulu-Natal',
+            elevation: '5 m',
+            population: '3.9 million',
+            description: "Durban is a coastal city known for its beaches and harbor. A major port city with diverse culture, Indian influence, surfing beaches, and warm subtropical climate year-round."
+        },
+        'Pretoria': {
+            region: 'Gauteng',
+            elevation: '1,339 m',
+            population: '2.5 million',
+            description: "Pretoria is South Africa's administrative capital. Known as the 'Jacaranda City' for its purple blooms, it's home to government buildings, museums, and beautiful gardens."
+        },
+        
+        // Egypt
+        'Cairo': {
+            region: 'Cairo Governorate',
+            elevation: '23 m',
+            population: '21 million',
+            description: "Cairo is the capital of Egypt and the largest city in the Arab world. Home to the nearby Pyramids of Giza and the Sphinx, it's a bustling metropolis blending ancient history with modern urban life."
+        },
+        'Alexandria': {
+            region: 'Alexandria Governorate',
+            elevation: '3 m',
+            population: '5.3 million',
+            description: "Alexandria is Egypt's second-largest city and main seaport. A historic Mediterranean city founded by Alexander the Great, known for the ancient Lighthouse and Library of Alexandria."
+        },
+        
+        // Ethiopia
+        'Addis Ababa': {
+            region: 'Addis Ababa Region',
+            elevation: '2,355 m',
+            population: '5.2 million',
+            description: "Addis Ababa is the capital of Ethiopia and diplomatic capital of Africa (AU headquarters). A high-altitude city known for its culture, history, coffee, and as a major hub for East Africa."
+        },
+        
+        // Tanzania
+        'Dar es Salaam': {
+            region: 'Dar es Salaam Region',
+            elevation: '13 m',
+            population: '6.7 million',
+            description: "Dar es Salaam is Tanzania's largest city and main port. A coastal city with vibrant markets, beaches, and as a gateway to Zanzibar and safari destinations like Serengeti."
+        },
+        
+        // Morocco
+        'Casablanca': {
+            region: 'Casablanca-Settat',
+            elevation: '50 m',
+            population: '3.8 million',
+            description: "Casablanca is Morocco's largest city and economic hub. Known for the Hassan II Mosque, Art Deco architecture, vibrant medina, and as a major port and commercial center."
+        },
+        'Marrakech': {
+            region: 'Marrakech-Safi',
+            elevation: '466 m',
+            population: '1 million',
+            description: "Marrakech is a major Moroccan city known for its vibrant souks, historic medina (UNESCO site), gardens, palaces, and as a major tourist destination with rich cultural heritage."
+        },
+        
+        // Senegal
+        'Dakar': {
+            region: 'Dakar Region',
+            elevation: '22 m',
+            population: '3.1 million',
+            description: "Dakar is the capital of Senegal on the Cape Verde Peninsula. Known for its music scene, Gorée Island (UNESCO site), vibrant markets, and as West Africa's westernmost city."
+        },
+        
+        // Uganda
+        'Kampala': {
+            region: 'Central Region',
+            elevation: '1,190 m',
+            population: '1.7 million',
+            description: "Kampala is the capital of Uganda built on seven hills. A vibrant city known for its friendly people, nightlife, markets, and as the gateway to gorilla trekking and national parks."
+        },
+        
+        // Rwanda
+        'Kigali': {
+            region: 'Kigali Province',
+            elevation: '1,567 m',
+            population: '1.2 million',
+            description: "Kigali is the capital of Rwanda, known as Africa's cleanest city. A modern, organized city with rolling hills, genocide memorials, vibrant culture, and remarkable post-conflict development."
+        },
+        
+        // Zimbabwe
+        'Harare': {
+            region: 'Harare Province',
+            elevation: '1,483 m',
+            population: '1.5 million',
+            description: "Harare is the capital of Zimbabwe. A city with wide streets, parks, and jacaranda trees, known for its history, culture, and as a gateway to Victoria Falls and wildlife parks."
+        },
+        
+        // Ivory Coast
+        'Abidjan': {
+            region: 'Lagunes District',
+            elevation: '10 m',
+            population: '4.9 million',
+            description: "Abidjan is the economic capital of Ivory Coast. A major port city with modern skyline, vibrant nightlife, French influence, and known as the 'Paris of West Africa.'"
+        },
+        
+        // Europe
         'London': {
             region: 'England',
             elevation: '11 m',
             population: '9.7 million',
             description: "London is the capital and largest city of England and the United Kingdom. A global hub for culture, finance, and history, it's home to iconic landmarks like Big Ben, the Tower of London, and Buckingham Palace."
-        },
-        'New York': {
-            region: 'New York State',
-            elevation: '10 m',
-            population: '8.3 million',
-            description: "New York City is the most populous city in the United States. Known as 'The City That Never Sleeps,' it's a global center for finance, culture, media, and entertainment, featuring landmarks like the Statue of Liberty and Times Square."
-        },
-        'Tokyo': {
-            region: 'Kanto',
-            elevation: '40 m',
-            population: '14 million',
-            description: "Tokyo is the capital and most populous city of Japan. A fascinating blend of traditional and modern, it's known for its skyscrapers, temples, shopping districts, and cutting-edge technology."
         },
         'Paris': {
             region: 'Île-de-France',
@@ -848,41 +1025,55 @@ function getCityData(cityName) {
             population: '2.2 million',
             description: "Paris, the capital of France, is renowned as the 'City of Light' and 'City of Love.' Famous for the Eiffel Tower, Louvre Museum, and Notre-Dame Cathedral, it's a global center for art, fashion, and culture."
         },
-        'Dubai': {
-            region: 'Dubai Emirate',
-            elevation: '16 m',
-            population: '3.5 million',
-            description: "Dubai is the largest city in the United Arab Emirates. Known for ultramodern architecture, luxury shopping, and vibrant nightlife, it features the world's tallest building, Burj Khalifa."
-        },
-        'Sydney': {
-            region: 'New South Wales',
-            elevation: '3 m',
-            population: '5.4 million',
-            description: "Sydney is Australia's largest and most iconic city. Famous for the Sydney Opera House and Harbour Bridge, it's known for beautiful beaches, vibrant culture, and stunning natural harbors."
-        },
-        'Mumbai': {
-            region: 'Maharashtra',
-            elevation: '14 m',
-            population: '21 million',
-            description: "Mumbai (formerly Bombay) is India's largest city and financial capital. A bustling metropolis, it's home to Bollywood, diverse cuisine, colonial architecture, and vibrant street life."
-        },
         'Berlin': {
             region: 'Brandenburg',
             elevation: '34 m',
             population: '3.7 million',
             description: "Berlin is the capital of Germany and a major European cultural hub. Known for its art scene, modern architecture, vibrant nightlife, and historical landmarks including the Berlin Wall and Brandenburg Gate."
         },
-        'Singapore': {
-            region: 'Central Region',
-            elevation: '15 m',
-            population: '5.7 million',
-            description: "Singapore is a sovereign city-state and island country in Southeast Asia. A global financial center, it's known for its modern skyline, Gardens by the Bay, diverse culture, and reputation as one of the world's cleanest cities."
+        'Rome': {
+            region: 'Lazio',
+            elevation: '21 m',
+            population: '2.9 million',
+            description: "Rome is the capital of Italy and one of the world's oldest cities. Known as the 'Eternal City,' it's home to the Colosseum, Vatican City, and countless historical treasures from ancient times."
         },
-        'Cairo': {
-            region: 'Cairo Governorate',
-            elevation: '23 m',
-            population: '21 million',
-            description: "Cairo is the capital of Egypt and the largest city in the Arab world. Home to the nearby Pyramids of Giza and the Sphinx, it's a bustling metropolis blending ancient history with modern urban life."
+        'Madrid': {
+            region: 'Community of Madrid',
+            elevation: '667 m',
+            population: '3.3 million',
+            description: "Madrid is the capital of Spain and one of Europe's most vibrant cities. Known for its art museums (Prado, Reina Sofia), beautiful parks, lively nightlife, and passionate football culture."
+        },
+        'Amsterdam': {
+            region: 'North Holland',
+            elevation: '-2 m',
+            population: '872,000',
+            description: "Amsterdam is the capital of the Netherlands. Famous for its canals, historic architecture, museums (Van Gogh, Anne Frank House), cycling culture, and liberal atmosphere."
+        },
+        'Barcelona': {
+            region: 'Catalonia',
+            elevation: '12 m',
+            population: '1.6 million',
+            description: "Barcelona is a coastal city in Spain. Famous for Gaudí's architecture (Sagrada Familia), beautiful beaches, vibrant culture, and as a major center for art, fashion, and sports."
+        },
+        'Moscow': {
+            region: 'Central Russia',
+            elevation: '156 m',
+            population: '12.5 million',
+            description: "Moscow is Russia's capital and largest city. Home to the iconic Red Square, Kremlin, and St. Basil's Cathedral, it's a major political, economic, and cultural center with rich history and grand architecture."
+        },
+        'Istanbul': {
+            region: 'Marmara',
+            elevation: '39 m',
+            population: '15.5 million',
+            description: "Istanbul is Turkey's largest city, straddling Europe and Asia. Rich in history as the former Byzantine and Ottoman capital, it's famous for the Hagia Sophia, Blue Mosque, and vibrant bazaars."
+        },
+        
+        // North America
+        'New York': {
+            region: 'New York State',
+            elevation: '10 m',
+            population: '8.3 million',
+            description: "New York City is the most populous city in the United States. Known as 'The City That Never Sleeps,' it's a global center for finance, culture, media, and entertainment, featuring landmarks like the Statue of Liberty and Times Square."
         },
         'Los Angeles': {
             region: 'California',
@@ -890,11 +1081,131 @@ function getCityData(cityName) {
             population: '4 million',
             description: "Los Angeles is a sprawling Southern California city and the center of the nation's film and television industry. Famous for Hollywood, beautiful beaches, and diverse neighborhoods, it's a global entertainment capital."
         },
-        'Moscow': {
-            region: 'Central Russia',
-            elevation: '156 m',
-            population: '12.5 million',
-            description: "Moscow is Russia's capital and largest city. Home to the iconic Red Square, Kremlin, and St. Basil's Cathedral, it's a major political, economic, and cultural center with rich history and grand architecture."
+        'Chicago': {
+            region: 'Illinois',
+            elevation: '179 m',
+            population: '2.7 million',
+            description: "Chicago is a major city on Lake Michigan known for its bold architecture, deep-dish pizza, and vibrant arts scene. The skyline features iconic buildings and it's a major financial and cultural center."
+        },
+        'Toronto': {
+            region: 'Ontario',
+            elevation: '76 m',
+            population: '2.9 million',
+            description: "Toronto is Canada's largest city and a major financial center. Known for the CN Tower, diverse neighborhoods, vibrant arts scene, and as one of the most multicultural cities in the world."
+        },
+        'Mexico City': {
+            region: 'Federal District',
+            elevation: '2,240 m',
+            population: '9.2 million',
+            description: "Mexico City is one of the oldest and largest cities in the Americas. Rich in history and culture, it features ancient Aztec ruins, colonial architecture, world-class museums, and vibrant markets."
+        },
+        'Miami': {
+            region: 'Florida',
+            elevation: '2 m',
+            population: '467,000',
+            description: "Miami is a coastal city in South Florida known for its beautiful beaches, Art Deco architecture, vibrant nightlife, and as a major cruise port and gateway to Latin America."
+        },
+        
+        // South America
+        'São Paulo': {
+            region: 'São Paulo State',
+            elevation: '760 m',
+            population: '12.3 million',
+            description: "São Paulo is Brazil's largest city and the largest in South America. A major financial center known for its cultural diversity, vibrant arts scene, world-class restaurants, and bustling urban life."
+        },
+        'Rio de Janeiro': {
+            region: 'Rio de Janeiro State',
+            elevation: '2 m',
+            population: '6.7 million',
+            description: "Rio de Janeiro is a coastal Brazilian city famous for its stunning beaches (Copacabana, Ipanema), Christ the Redeemer statue, Carnival festival, and dramatic mountain backdrop."
+        },
+        'Buenos Aires': {
+            region: 'Buenos Aires Province',
+            elevation: '25 m',
+            population: '3 million',
+            description: "Buenos Aires is the capital of Argentina. Known for tango, European-style architecture, passionate football culture, delicious steaks, and vibrant neighborhoods like La Boca and Palermo."
+        },
+        
+        // Asia
+        'Tokyo': {
+            region: 'Kanto',
+            elevation: '40 m',
+            population: '14 million',
+            description: "Tokyo is the capital and most populous city of Japan. A fascinating blend of traditional and modern, it's known for its skyscrapers, temples, shopping districts, and cutting-edge technology."
+        },
+        'Dubai': {
+            region: 'Dubai Emirate',
+            elevation: '16 m',
+            population: '3.5 million',
+            description: "Dubai is the largest city in the United Arab Emirates. Known for ultramodern architecture, luxury shopping, and vibrant nightlife, it features the world's tallest building, Burj Khalifa."
+        },
+        'Singapore': {
+            region: 'Central Region',
+            elevation: '15 m',
+            population: '5.7 million',
+            description: "Singapore is a sovereign city-state and island country in Southeast Asia. A global financial center, it's known for its modern skyline, Gardens by the Bay, diverse culture, and reputation as one of the world's cleanest cities."
+        },
+        'Mumbai': {
+            region: 'Maharashtra',
+            elevation: '14 m',
+            population: '21 million',
+            description: "Mumbai (formerly Bombay) is India's largest city and financial capital. A bustling metropolis, it's home to Bollywood, diverse cuisine, colonial architecture, and vibrant street life."
+        },
+        'Delhi': {
+            region: 'National Capital Territory',
+            elevation: '216 m',
+            population: '32 million',
+            description: "Delhi is the capital of India. A city of contrasts blending ancient and modern, it's home to historic monuments like the Red Fort, India Gate, diverse cuisine, and bustling markets."
+        },
+        'Bangkok': {
+            region: 'Central Thailand',
+            elevation: '1.5 m',
+            population: '10.7 million',
+            description: "Bangkok is Thailand's capital and largest city. Known for ornate temples, vibrant street life, bustling markets, delicious street food, and a dynamic nightlife scene."
+        },
+        'Beijing': {
+            region: 'Northern China',
+            elevation: '43 m',
+            population: '21.5 million',
+            description: "Beijing is the capital of China and one of the world's oldest cities. Home to the Forbidden City, Great Wall nearby, and modern Olympic venues, it's a major cultural and political center."
+        },
+        'Shanghai': {
+            region: 'Eastern China',
+            elevation: '4 m',
+            population: '27 million',
+            description: "Shanghai is China's largest city and a global financial hub. Known for its futuristic skyline, historic waterfront Bund, excellent shopping, and as a major center for business and culture."
+        },
+        'Seoul': {
+            region: 'Seoul Capital Area',
+            elevation: '38 m',
+            population: '9.7 million',
+            description: "Seoul is the capital of South Korea. A dynamic metropolis blending modern skyscrapers with traditional palaces, it's known for K-pop, technology, delicious cuisine, and vibrant street culture."
+        },
+        'Hong Kong': {
+            region: 'Special Administrative Region',
+            elevation: '2 m',
+            population: '7.5 million',
+            description: "Hong Kong is a vibrant city and special administrative region of China. Known for its stunning skyline, bustling harbor, dim sum cuisine, and unique blend of Eastern and Western cultures."
+        },
+        
+        // Oceania
+        'Sydney': {
+            region: 'New South Wales',
+            elevation: '3 m',
+            population: '5.4 million',
+            description: "Sydney is Australia's largest and most iconic city. Famous for the Sydney Opera House and Harbour Bridge, it's known for beautiful beaches, vibrant culture, and stunning natural harbors."
+        },
+        'Melbourne': {
+            region: 'Victoria',
+            elevation: '31 m',
+            population: '5 million',
+            description: "Melbourne is Australia's cultural capital. Known for its coffee culture, street art, sports passion (Australian football), diverse food scene, and European-style architecture."
+        },
+        'Auckland': {
+            region: 'North Island',
+            elevation: '26 m',
+            population: '1.7 million',
+            description: "Auckland is New Zealand's largest city. Known as the 'City of Sails,' it's surrounded by harbors and islands, offering beautiful scenery, outdoor activities, and Polynesian culture."
         }
     };
 
